@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ page | replace('-', ' ') | title }} | {{ site_name }}{% endblock %}
+{% block content %}
+<section class="card info-page">
+  {% if page == 'about-us' %}
+    <h1>About {{ site_name }}</h1>
+    <p>{{ site_name }} is an automated job-notification portal that aggregates the latest
+    Sarkari Naukri (government job) notifications, admit cards, results and answer keys
+    from publicly available sources every day.</p>
+    <p>A built-in scheduler fetches newly published content once per day and adds it to this
+    site automatically — no manual posting required.</p>
+  {% elif page == 'contact' %}
+    <h1>Contact</h1>
+    <p>For queries about listings on this portal, use your preferred contact channel.
+    Note: we are not the recruiting authority; for application issues always contact the
+    organization named in the notification.</p>
+  {% elif page == 'privacy' %}
+    <h1>Privacy Policy</h1>
+    <p>This site stores only publicly available job notification data. We do not collect
+    personal information from visitors, run account systems, or track users across sites.</p>
+  {% elif page == 'disclaimer' %}
+    <h1>Disclaimer</h1>
+    <p>All information on {{ site_name }} is gathered from public sources for general
+    awareness only. We do not claim ownership of the underlying content; all trademarks
+    belong to their respective owners. Errors &amp; omissions excepted. Candidates must
+    verify every detail (vacancies, dates, fees, eligibility) on the official organization
+    website before applying.</p>
+  {% endif %}
+</section>
+{% endblock %}

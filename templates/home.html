@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="hero">
+  <h1>Find Your Dream Sarkari Naukri {{ now.year }}</h1>
+  <p>{{ tagline }} — {{ total }} notifications in our daily-updated database.</p>
+  {% if last_run %}
+    <p class="meta">Last auto-update: {{ last_run.finished_at or last_run.started_at }}
+       (+{{ last_run.new_jobs }} new jobs)</p>
+  {% endif %}
+</section>
+
+<div class="layout">
+  <div class="col-main">
+
+    <section class="card">
+      <h2>🔥 Latest Sarkari Job Notifications</h2>
+      <table class="job-table">
+        <thead>
+          <tr><th>Job / Organization</th><th>Vacancy</th><th>Last Date</th><th>Location</th></tr>
+        </thead>
+        <tbody>
+        {% for j in jobs %}
+          <tr>
+            <td>
+              <a href="/job/{{ j.id }}">{{ j.title }}</a>
+              {% if j.is_new %}<span class="badge new">NEW</span>{% endif %}
+              {% if j.organization %}<div class="sub">{{ j.organization }}</div>{% endif %}
+            </td>
+            <td>{{ j.total_vacancies or '—' }}</td>
+            <td>{{ j.valid_through or '—' }}</td>
+            <td>{{ j.location or j.state or '—' }}</td>
+          </tr>
+        {% else %}
+          <tr><td colspan="4">No jobs yet. Run <code>python app.py --scrape</code> to pull content.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% include "_pager.html" %}
+    </section>
+
+  </div>
+
+  <aside class="col-side">
+    <section class="card">
+      <h3>🏛️ Popular Categories</h3>
+      <ul class="cat-list">
+        {% for c in categories %}
+          <li><a href="/category/{{ c.category | urlencode }}">{{ c.category }}</a>
+              <span class="count">{{ c.n }}</span></li>
+        {% else %}
+          <li>No categories yet</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="card">
+      <h3>⚡ Quick Updates</h3>
+      <ul class="link-list">
+        {% for j in latest[:10] %}
+          <li><a href="/job/{{ j.id }}">{{ j.title | truncate(70) }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  </aside>
+</div>
+
+{% endblock %}

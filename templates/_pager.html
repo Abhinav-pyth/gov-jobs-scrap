@@ -1,0 +1,7 @@
+{% if pages and pages > 1 %}
+<nav class="pager">
+  {% if page > 1 %}<a href="?page={{ page - 1 }}{% if request.args.get('q') %}&q={{ request.args.get('q') | urlencode }}{% endif %}">← Prev</a>{% endif %}
+  <span>Page {{ page }} / {{ pages }}</span>
+  {% if page < pages %}<a href="?page={{ page + 1 }}{% if request.args.get('q') %}&q={{ request.args.get('q') | urlencode }}{% endif %}">Next →</a>{% endif %}
+</nav>
+{% endif %}
