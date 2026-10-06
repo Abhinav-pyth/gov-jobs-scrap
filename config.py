@@ -1,4 +1,6 @@
 """Central configuration for the SarkariNaukriMirror application."""
+import os
+
 
 # ---------------------------------------------------------------------------
 # Source site (the website we mirror / aggregate new content from)
@@ -22,7 +24,8 @@ JOB_SITEMAP_PATHS = ["/sitemaps/jobs.xml"]
 # ---------------------------------------------------------------------------
 # Application
 # ---------------------------------------------------------------------------
-DATABASE_PATH = "data/mirror.sqlite3"
+# On Vercel (read-only fs) default to an in-filesystem writable path if set.
+DATABASE_PATH = os.environ.get("DATABASE_PATH", "data/mirror.sqlite3")
 STATIC_DIR = "static"
 HOST = "0.0.0.0"
 PORT = 8000

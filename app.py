@@ -167,7 +167,10 @@ _scrape_state = {"running": False, "last_result": None, "last_at": None}
 
 
 @app.route("/admin/scrape", methods=["POST", "GET"])
+@app.route("/api/scrape/run_scrape", methods=["POST"])
 def admin_scrape():
+    """Manual scrape trigger. On Vercel the daily cron instead calls the
+    serverless function in api/scrape/run_scrape.py directly."""
     if request.method == "GET":
         return jsonify(_scrape_state)
 
