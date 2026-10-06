@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ site_name }} - Sarkari Naukri 2026{% endblock %}</title>
+  <meta name="description" content="{{ tagline if tagline else 'Latest government job notifications updated daily.' }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="/">🏛️ <span>{{ site_name }}</span></a>
+    <form class="searchbar" action="/search" method="get">
+      <input type="text" name="q" placeholder="Search jobs: SSC, UPSC, Railway…" aria-label="Search jobs">
+      <button type="submit">🔍</button>
+    </form>
+  </div>
+  <nav class="main-nav">
+    <div class="container">
+      <a href="/">Home</a>
+      <a href="/admit-card">Admit Card</a>
+      <a href="/sarkari-result">Results</a>
+      <a href="/answer-key">Answer Key</a>
+      <a href="/syllabus">Syllabus</a>
+      <a href="/employment-news">Employment News</a>
+      <a href="/latest-updates">Updates</a>
+      <a href="/category/Uttar%20Pradesh%20Govt%20Jobs">State Jobs</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h4>{{ site_name }}</h4>
+      <p>Automatic daily-updated mirror of latest Sarkari Naukri notifications.
+      Content aggregated from public sources; verify with official websites before applying.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <a href="/latest-updates">Latest Updates</a>
+      <a href="/sarkari-result">Results</a>
+      <a href="/admit-card">Admit Cards</a>
+      <a href="/search">Search Jobs</a>
+    </div>
+    <div>
+      <h4>Info</h4>
+      <a href="/about-us">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/disclaimer">Disclaimer</a>
+    </div>
+  </div>
+  <div class="container copyright">
+    © {{ now.year if now else 2026 }} {{ site_name }} · Data refreshed daily via automated scraper.
+  </div>
+</footer>
+</body>
+</html>

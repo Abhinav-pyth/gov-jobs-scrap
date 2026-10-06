@@ -1,0 +1,68 @@
+/* Sarkari Naukri mirror - clean zero-framework styling (original design) */
+:root{
+  --primary:#1e3a8a; --accent:#dc2626; --bg:#f4f6fb; --card:#fff;
+  --text:#1f2937; --muted:#6b7280; --border:#e5e7eb; --radius:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
+.site-header{background:var(--primary);color:#fff}
+.header-inner{display:flex;align-items:center;gap:16px;padding:12px 16px;flex-wrap:wrap}
+.logo{color:#fff;font-weight:800;font-size:1.3rem;display:flex;gap:8px;align-items:center}
+.logo span{letter-spacing:.3px}
+.searchbar{margin-left:auto;display:flex;flex:1;max-width:420px}
+.searchbar input{flex:1;border:0;border-radius:8px 0 0 8px;padding:9px 12px;font-size:.95rem}
+.searchbar button{border:0;background:var(--accent);color:#fff;border-radius:0 8px 8px 0;padding:0 14px;cursor:pointer}
+.main-nav{background:#16275c}
+.main-nav .container{display:flex;gap:4px;overflow-x:auto}
+.main-nav a{color:#dbe4ff;padding:9px 12px;font-size:.9rem;white-space:nowrap;border-radius:6px}
+.main-nav a:hover{background:#233a7d;color:#fff;text-decoration:none}
+
+.hero{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:var(--radius);padding:26px;margin:18px 0}
+.hero h1{margin:0 0 6px;font-size:1.7rem}
+.hero p{margin:4px 0}
+.hero .meta{opacity:.85;font-size:.85rem}
+
+.layout{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:18px}
+.card h1,.card h2,.card h3{margin-top:0;color:var(--primary)}
+
+.job-table{width:100%;border-collapse:collapse;font-size:.92rem}
+.job-table th{background:#eef2ff;text-align:left;color:var(--primary);padding:8px}
+.job-table td{padding:8px;border-top:1px solid var(--border);vertical-align:top}
+.job-table tr:nth-child(even) td{background:#fafbff}
+.job-table .sub{color:var(--muted);font-size:.8rem}
+
+.badge{font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:20px;vertical-align:middle}
+.badge.new{background:var(--accent);color:#fff;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.6}}
+
+.cat-list,.link-list{list-style:none;margin:0;padding:0}
+.cat-list li,.link-list li{padding:7px 0;border-bottom:1px dashed var(--border);display:flex;justify-content:space-between;gap:8px}
+.link-list li{display:block}
+.count{background:#eef2ff;color:var(--primary);border-radius:12px;padding:1px 9px;font-size:.75rem;font-weight:700}
+
+.pager{display:flex;justify-content:center;gap:16px;margin-top:14px}
+.pager a{background:var(--primary);color:#fff;padding:6px 14px;border-radius:8px}
+
+.crumbs{font-size:.82rem;color:var(--muted);margin-bottom:8px}
+.quickfacts{width:100%;border-collapse:collapse;margin:14px 0}
+.quickfacts th{background:#fef2f2;color:#7f1d1d;text-align:left;width:180px;padding:8px;border:1px solid var(--border)}
+.quickfacts td{padding:8px;border:1px solid var(--border)}
+.rendered-body h2{font-size:1.15rem;border-left:4px solid var(--accent);padding-left:10px}
+.rendered-body table{width:100%!important;border-collapse:collapse;font-size:.9rem;margin:10px 0}
+.rendered-body table th,.rendered-body table td{border:1px solid var(--border);padding:6px 8px}
+.rendered-body table th{background:#eef2ff}
+.source-note{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--border);padding-top:10px}
+
+.site-footer{background:#111a33;color:#cbd5e1;margin-top:30px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px;padding:26px 16px}
+@media(max-width:700px){.footer-grid{grid-template-columns:1fr}}
+.site-footer h4{color:#fff;margin:0 0 8px}
+.site-footer a{color:#93c5fd;display:block;padding:2px 0}
+.copyright{border-top:1px solid #2a3a63;padding:12px 16px;font-size:.8rem;text-align:center}

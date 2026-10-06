@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} | {{ site_name }}{% endblock %}
+{% block content %}
+
+<article class="card job-detail">
+  <nav class="crumbs"><a href="/">Home</a> ›
+    {% if job.category %}<a href="/category/{{ job.category | urlencode }}">{{ job.category }}</a> ›{% endif %}
+    <span>{{ job.organization or 'Job' }}</span>
+  </nav>
+
+  <h1>{{ job.title }} {% if job.is_new %}<span class="badge new">NEW</span>{% endif %}</h1>
+  <p class="meta">📅 Posted: {{ job.date_posted or '—' }} · 🏢 {{ job.organization or '—' }}
+     · 📍 {{ job.location or job.state or '—' }}</p>
+
+  <table class="quickfacts">
+    <tr><th>Total Vacancies</th><td>{{ job.total_vacancies or '—' }}</td></tr>
+    <tr><th>Qualification</th><td>{{ job.qualification or '—' }}</td></tr>
+    <tr><th>Age Limit</th><td>{{ job.age_limit or '—' }}</td></tr>
+    <tr><th>Salary</th><td>{{ job.salary or '—' }}</td></tr>
+    <tr><th>Last Date to Apply</th><td>{{ job.valid_through or '—' }}</td></tr>
+    <tr><th>Employment Type</th><td>{{ job.employment_type or '—' }}</td></tr>
+  </table>
+
+  <div class="rendered-body">
+    {{ job.content_html | safe }}
+  </div>
+
+  <p class="source-note">Source: aggregated from public notification pages.
+    Always verify details on the official website.
+    <a href="{{ job.source_url }}" rel="nofollow noopener" target="_blank">View original posting ↗</a>
+  </p>
+</article>
+
+{% if related %}
+<section class="card">
+  <h2>Related Jobs</h2>
+  <ul class="link-list">
+    {% for r in related %}
+      <li><a href="/job/{{ r.id }}">{{ r.title | truncate(80) }}</a>
+          <span class="sub">{{ r.date_posted }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% endblock %}
