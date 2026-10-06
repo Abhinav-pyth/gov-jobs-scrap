@@ -1,17 +1,19 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
 
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb", "runtime": "python3.12" }
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "memory": 1024
     },
-    {
-      "src": "api/scrape/run_scrape.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "50mb", "runtime": "python3.12" }
+    "api/scrape/run_scrape.py": {
+      "maxDuration": 300,
+      "memory": 1024
     }
+  },
+
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/api/index" }
   ],
 
   "crons": [
@@ -19,13 +21,5 @@
       "path": "/api/scrape/run_scrape",
       "schedule": "0 6 * * *"
     }
-  ],
-
-  "functions": {
-    "api/scrape/run_scrape.py": { "maxDuration": 60 }
-  },
-
-  "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/app.py" }
   ]
 }
