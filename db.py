@@ -77,13 +77,13 @@ class _TursoAdapter:
         self._client = client
 
     def execute(self, sql, args=()):
-        rows = self._client.execute(sql, tuple(args))
-        columns = [c["name"] for c in self._client.columns()] if rows else []
-        return _TursoResult(rows or [], columns)
+        # libsql_http.Connection.execute returns a Result object that already
+        # mimics sqlite3.Cursor (fetchall/fetchone/lastrowid/rowcount), so we
+        # can pass it straight through.
+        return self._client.execute(sql, tuple(args))
 
     def executescript(self, script):
-        for stmt in [s.strip() for s in script.split(";") if s.strip()]:
-            self._client.execute(stmt, ())
+        self._client.executescript(script)
 
     def commit(self):
         pass  # libSQL HTTP client commits per statement
@@ -170,15 +170,18 @@ def db_path() -> str:
 @contextmanager
 def get_db():
     if use_turso():
-        from libsql.client import Client  # type: ignore
+        # NOTE: we deliberately do NOT use the PyPI `libsql` package here -
+        # it is embedded-only (no `libsql.client` module), which caused
+        # ModuleNotFoundError -> 500 on every page once Turso env vars were
+        # set.  `libsql_http` speaks the Hrana v2 WebSocket protocol directly
+        # using only the standard library + `websockets`.
+        import libsql_http
 
-        client = (Client.http(TURSO_DATABASE_URL, TURSO_AUTH_TOKEN)
-                  if hasattr(Client, "http") else
-                  Client(url=TURSO_DATABASE_URL, auth_token=TURSO_AUTH_TOKEN))
+        conn = libsql_http.connect(TURSO_DATABASE_URL, TURSO_AUTH_TOKEN)
         try:
-            yield _TursoAdapter(client)
+            yield _TursoAdapter(conn)
         finally:
-            client.close()
+            conn.close()
         return
 
     os.makedirs(os.path.dirname(db_path()), exist_ok=True)

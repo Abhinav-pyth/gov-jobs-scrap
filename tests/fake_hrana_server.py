@@ -69,7 +69,10 @@ async def handler(ws):
     async for raw in ws:
         msg = json.loads(raw)
         rid = msg.get("request_id")
-        req = msg.get("request") or {}
+        # Hrana v2 sends bare top-level requests ({"type": "hello", ...}) and
+        # stream requests wrapped as {"stream_request": {...}} with an outer
+        # request_id.  Normalise both shapes here.
+        req = msg.get("request") or msg.get("stream_request") or msg
         if req.get("type") == "hello":
             await ws.send(json.dumps({"type": "hello_ok",
                                       "server": {"version": "0.0.0-test"}}))
